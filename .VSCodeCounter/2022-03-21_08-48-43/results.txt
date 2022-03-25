@@ -1,0 +1,60 @@
+Date : 2022-03-21 08:48:43
+Directory : d:\毕业设计\项目\后端项目\onlinestudy
+Total : 27 files,  3135 codes, 100 comments, 115 blanks, all 3350 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |      2,360 |          0 |          2 |      2,362 |
+| JavaScript |         25 |        775 |        100 |        113 |        988 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                            | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                               |         27 |      3,135 |        100 |        115 |      3,350 |
+| src                                                             |         25 |        775 |        100 |        113 |        988 |
+| src\app                                                         |          4 |        130 |          2 |         15 |        147 |
+| src\constants                                                   |          2 |         30 |          9 |          2 |         41 |
+| src\controller                                                  |          4 |        150 |         18 |         19 |        187 |
+| src\middleware                                                  |          3 |        173 |         52 |         32 |        257 |
+| src\router                                                      |          6 |         50 |          9 |         14 |         73 |
+| src\service                                                     |          4 |        230 |         10 |         27 |        267 |
+| src\utils                                                       |          1 |          7 |          0 |          2 |          9 |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                        | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
+| d:\毕业设计\项目\后端项目\onlinestudy\package-lock.json                   | JSON       |      2,332 |          0 |          1 |      2,333 |
+| d:\毕业设计\项目\后端项目\onlinestudy\package.json                        | JSON       |         28 |          0 |          1 |         29 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\app\config.js                   | JavaScript |         17 |          0 |          2 |         19 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\app\database.js                 | JavaScript |         19 |          1 |          4 |         24 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\app\error-handler.js            | JavaScript |         77 |          0 |          3 |         80 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\app\index.js                    | JavaScript |         17 |          1 |          6 |         24 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\constants\error-types.js        | JavaScript |         20 |          9 |          0 |         29 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\constants\file-path.js          | JavaScript |         10 |          0 |          2 |         12 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\controller\auth.controller.js   | JavaScript |         26 |          0 |          3 |         29 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\controller\course.controller.js | JavaScript |         52 |          8 |          9 |         69 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\controller\file.controller.js   | JavaScript |         55 |          6 |          6 |         67 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\controller\user.controller.js   | JavaScript |         17 |          4 |          1 |         22 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\main.js                         | JavaScript |          5 |          0 |          2 |          7 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\middleware\auth.middleware.js   | JavaScript |         82 |         10 |         11 |        103 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\middleware\file.middleware.js   | JavaScript |         49 |          4 |         14 |         67 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\middleware\user.middleware.js   | JavaScript |         42 |         38 |          7 |         87 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\router\auth.router.js           | JavaScript |          9 |          1 |          3 |         13 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\router\course.router.js         | JavaScript |         10 |          5 |          2 |         17 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\router\file.router.js           | JavaScript |          9 |          3 |          2 |         14 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\router\home.router.js           | JavaScript |          5 |          0 |          2 |          7 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\router\index.js                 | JavaScript |         10 |          0 |          2 |         12 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\router\user.router.js           | JavaScript |          7 |          0 |          3 |         10 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\service\auth.service.js         | JavaScript |         25 |          0 |          4 |         29 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\service\course.service.js       | JavaScript |         64 |          1 |          9 |         74 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\service\file.service.js         | JavaScript |         60 |          0 |          6 |         66 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\service\user.service.js         | JavaScript |         81 |          9 |          8 |         98 |
+| d:\毕业设计\项目\后端项目\onlinestudy\src\utils\password-handler.js       | JavaScript |          7 |          0 |          2 |          9 |
+| Total                                                           |            |      3,135 |        100 |        115 |      3,350 |
++-----------------------------------------------------------------+------------+------------+------------+------------+------------+
