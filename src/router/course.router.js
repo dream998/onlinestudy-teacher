@@ -7,10 +7,16 @@ const {create,
     labelInfo, 
     catalogInfo, 
     hotCourseInfo,
+    choiceQuestionInfo,
+    sutdyProcessInfo,
+    judgeQuestionInfo,
+    createJoinCourse,
     createSections,
     createSubsections, 
     createChoiceQuestions, 
-    createJudgeQuestions} = require('../controller/course.controller')
+    createJudgeQuestions,
+    saveStudyProcess,
+    saveAnswers} = require('../controller/course.controller')
 
 const courseRouter = new Router({prefix:'/courses'})
 // 课程基本信息接口
@@ -31,9 +37,20 @@ courseRouter.get('/:subsectionId/file',fileInfo)
 courseRouter.get('/:courseId/catalog',catalogInfo)
 // 上传小节选择题
 courseRouter.post('/:subsectionId/choicequestions',verifyAuth, createChoiceQuestions)
+// 获取小节选择题
+courseRouter.get('/:subsectionId/choicequestions',verifyAuth, choiceQuestionInfo)
 // 上传小节判断题
 courseRouter.post('/:subsectionId/judgequestions',verifyAuth, createJudgeQuestions)
+// 获取小节判断题
+courseRouter.get('/:subsectionId/judgequestions',verifyAuth, judgeQuestionInfo)
 // 获取最新课程信息
 courseRouter.get('/newcourses',hotCourseInfo)
-
+//加入课程
+courseRouter.get('/:courseId/joincourse',verifyAuth, createJoinCourse)
+// 保存学习进度
+courseRouter.post('/:subsectionId/studyprocess', verifyAuth,saveStudyProcess)
+// 保存答案
+courseRouter.post('/:subsectionId/answers',verifyAuth,saveAnswers)
+// 获取学习进度
+courseRouter.get('/:subsectionId/studyprocess',verifyAuth,sutdyProcessInfo)
 module.exports = courseRouter

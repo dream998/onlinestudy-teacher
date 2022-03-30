@@ -37,22 +37,22 @@ class CourseService {
 
     }
 
-    async createKind(courseId,courseKinds){
+    async createKind(courseId, courseKinds) {
         const kinds = []
-        for(let i = 0; i < courseKinds.length; i++){
+        for (let i = 0; i < courseKinds.length; i++) {
             const getIdStatement = 'select kind_id, kind_name from kinds where kind_name = ?'
             const [result] = await connection.execute(getIdStatement, [courseKinds[i]])
             console.log(result[0]);
             const createCourseKindStatement = `insert into coursekinds(course_id, kind_id, kind_name) values(?,?,?)`
-            const insertResult = await connection.execute(createCourseKindStatement, [courseId,result[0].kind_id,result[0].kind_name])
+            const insertResult = await connection.execute(createCourseKindStatement, [courseId, result[0].kind_id, result[0].kind_name])
             console.log(insertResult);
-            kinds.push({kindId:result[0].kind_id, kindName:courseKinds[i]})
+            kinds.push({ kindId: result[0].kind_id, kindName: courseKinds[i] })
 
         }
         return kinds
 
     }
-    
+
 
     async createJudgeQuestion(item, index, subsectionId) {
         const answer = item.answer === 'current' ? 1 : 0
@@ -148,23 +148,106 @@ class CourseService {
         }
     }
 
-    async getLabels(){
+    async getLabels() {
         const statement = 'select kind_name from kinds '
         const [result] = await connection.execute(statement)
         console.log(result);
         return result
     }
-    async getNewCourses(){
+    async getNewCourses() {
         const statement = `SELECT * FROM courses ORDER BY createAt DESC LIMIT 0,3;`
         const [result] = await connection.execute(statement)
         console.log(result);
         return result
     }
-    async getCreatorInfo(id){
+    async getCreatorInfo(id) {
         const statement = `select user_id,user_name,user_school,user_college,user_class,user_avatar_url,introduction from users where user_id = ?`
         const [result] = await connection.execute(statement, [id])
         console.log(result[0]);
         return result[0]
+    }
+
+    async getChoiceQuestions(subsectionId) {
+        const statement = `select * from choicequestions where subsection_id = ?`
+        const [result] = await connection.execute(statement, [subsectionId])
+        return result
+    }
+
+    async getJudgeQuestions(subsectionId) {
+        const statement = `select * from judgequestions where subsection_id = ?`
+        const [result] = await connection.execute(statement, [subsectionId])
+        return result
+    }
+
+    async createJoinCourse(courseId, userId) {
+        try {
+            const statement = 'insert into choosecourses(student_id, course_id) values(?,?)'
+            const [result] = await connection.execute(statement, [userId, courseId])
+            return result
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    async searchProcess(userId, subsectionId) {
+        const statement = `select * from studyprocess where student_id = ? and subsection_id = ?`
+        const [result] = await connection.execute(statement, [userId, subsectionId])
+        //console.log('查询结果：',result);
+        return result
+    }
+
+    async createStudyProcess(userId, subsectionId, process) {
+        try {
+
+            const { videoProcess, videoFinished, fileFinished, testFinished } = process
+            const statement = `insert into studyprocess(student_id,subsection_id,video_process,video_finished,file_finished,test_finished) values(?,?,?,?,?,?)`
+            const [result] = await connection.execute(statement, [userId, subsectionId, videoProcess, videoFinished, fileFinished, testFinished])
+            console.log(result);
+            return result
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async updateProcess(userId, subsectionId, process) {
+        try {
+            const { videoProcess, videoFinished, fileFinished, testFinished } = process
+            const statement = `update studyprocess set video_process = ?,video_finished = ?, file_finished = ?, test_finished = ? where student_id = ? and subsection_id = ?`
+            const [result] = await connection.execute(statement, [videoProcess, videoFinished, fileFinished, testFinished, userId, subsectionId])
+            return result
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async createChoiceAnswer(answers, studentId, subsectionId) {
+
+        for (let i = 0; i < answers.length; i++) {
+            //console.log('这是第'+i+'次插入选择答案',answers[i].answer, answers.length);
+            const searchStatement = `select * from choiceanswers where question_id = ?`
+            const [result] = await connection.execute(searchStatement, [answers[i].questionId])
+            if (result.length === 0) {
+                const statement = `insert into choiceanswers(student_id,subsection_id,student_answer,question_id) values(?,?,?,?)`
+                await connection.execute(statement, [studentId, subsectionId, answers[i].answer, answers[i].questionId])
+            }
+
+
+        }
+    }
+
+    async createJudgeAnswer(answers, studentId, subsectionId) {
+        for (let i = 0; i < answers.length; i++) {
+            //console.log('这是第'+i+'次插入判断答案',answers[i].answer);
+            const searchStatement = `select * from judgeanswers where question_id = ?`
+            const [result] = await connection.execute(searchStatement, [answers[i].questionId])
+            if(result.length === 0){
+                const statement = `insert into judgeanswers(student_id,subsection_id,student_answer,question_id) values(?,?,?,?)`
+                await connection.execute(statement, [studentId, subsectionId, answers[i].answer, answers[i].questionId])
+            }
+
+        }
     }
 
 
