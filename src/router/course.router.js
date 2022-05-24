@@ -10,12 +10,26 @@ const {create,
     choiceQuestionInfo,
     sutdyProcessInfo,
     judgeQuestionInfo,
+    createdCoursesInfo,
+    choiceAnswerInfo,
+    judgeAnswerInfo,
+    myCourseInfo,
+    choiceCourseInfo,
+    allStudyProcessInfo,
     createJoinCourse,
     createSections,
     createSubsections, 
     createChoiceQuestions, 
     createJudgeQuestions,
     saveStudyProcess,
+    createComment,
+    commentInfo,
+    allCommentInfo,
+    allTestInfo,
+    updataCommentState,
+    createWarning,
+    getWarning,
+    updateWarningState,
     saveAnswers} = require('../controller/course.controller')
 
 const courseRouter = new Router({prefix:'/courses'})
@@ -51,6 +65,34 @@ courseRouter.get('/:courseId/joincourse',verifyAuth, createJoinCourse)
 courseRouter.post('/:subsectionId/studyprocess', verifyAuth,saveStudyProcess)
 // 保存答案
 courseRouter.post('/:subsectionId/answers',verifyAuth,saveAnswers)
+// 获取选择题答案
+courseRouter.get('/:questionId/choiceanswer',verifyAuth,choiceAnswerInfo)
+// 获取判断题答案
+courseRouter.get('/:questionId/judgeanswer',verifyAuth,judgeAnswerInfo)
 // 获取学习进度
 courseRouter.get('/:subsectionId/studyprocess',verifyAuth,sutdyProcessInfo)
+// 获取选课信息
+courseRouter.get('/:courseId/choicecourse',verifyAuth,choiceCourseInfo)
+// 获取加入的课程
+courseRouter.get('/mycourses',verifyAuth,myCourseInfo)
+// 获取创建的课程
+courseRouter.get('/createdcourses', verifyAuth, createdCoursesInfo)
+// 获取所有学习进度
+courseRouter.post('/allstudyprocess',verifyAuth, allStudyProcessInfo)
+// 获取所有小节测试题
+courseRouter.post('/alltest',verifyAuth,allTestInfo)
+// 发表评论
+courseRouter.post('/:subsectionId/comment',verifyAuth,createComment)
+// 根据小节id获取评论
+courseRouter.get('/:subsectionId/comment',commentInfo)
+// 根据课程id获取评论
+courseRouter.get('/:courseId/allcomments',allCommentInfo)
+// 更新评论状态
+courseRouter.post('/updatacommentstate',updataCommentState)
+// 创建课程预警
+courseRouter.post('/coursewarning',createWarning)
+// 获取课程预警
+courseRouter.get('/coursewarning',verifyAuth, getWarning)
+// 更新课程预警state
+courseRouter.get('/updatewarningstate',verifyAuth,updateWarningState)
 module.exports = courseRouter

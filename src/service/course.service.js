@@ -242,7 +242,7 @@ class CourseService {
             //console.log('这是第'+i+'次插入判断答案',answers[i].answer);
             const searchStatement = `select * from judgeanswers where question_id = ?`
             const [result] = await connection.execute(searchStatement, [answers[i].questionId])
-            if(result.length === 0){
+            if (result.length === 0) {
                 const statement = `insert into judgeanswers(student_id,subsection_id,student_answer,question_id) values(?,?,?,?)`
                 await connection.execute(statement, [studentId, subsectionId, answers[i].answer, answers[i].questionId])
             }
@@ -250,6 +250,113 @@ class CourseService {
         }
     }
 
+    // 获取选课信息
+    async getChoiceCourseInfo(courseId, userId) {
+        const statement = `select * from choosecourses where student_id = ? and course_id = ?`
+        const [result] = await connection.execute(statement, [userId, courseId])
+        console.log(result);
+        return result
+    }
+
+    // 根据获取用户id获取选课课程
+    async getcoursesByUserid(userId) {
+        const statement = `select * from choosecourses where student_id = ? `
+        const [result] = await connection.execute(statement, [userId])
+        return result
+    }
+    // 根据创建者id获取课程
+    async getcoursesByCreatorId(userId) {
+        const statement = `select * from courses where course_creator = ?`
+        const [result] = await connection.execute(statement, [userId])
+        return result
+    }
+    // 获取选择题答案
+    async getChoiceAnswer(questionId) {
+        const statement = `select * from choiceanswers where question_id = ?`
+        const [result] = await connection.execute(statement, [questionId])
+        console.log(result);
+        return result[0]
+    }
+
+    async getJudegeAnswer(questionId) {
+        const statement = `select * from judgeanswers where question_id = ?`
+        const [result] = await connection.execute(statement, [questionId])
+        return result[0]
+    }
+
+    //创建评论 
+    async createComment(commentContent, subsectionId, courseId, userId, parentCommentId,userName) {
+
+        if (parentCommentId) {
+            const statement = `
+                insert into comments(comment_content,user_id,subsection_id,course_id,parent_comment_id, state,user_name)
+                values(?,?,?,?,?,?,?)
+            `
+            const [result] = await connection.execute(statement, [commentContent, userId, subsectionId, courseId, parentCommentId,0,userName])
+            return result
+        } else {
+            const statement = `
+                insert into comments(comment_content,user_id,subsection_id,course_id, state,user_name)
+                values(?,?,?,?,?,?)
+            `
+            const [result] = await connection.execute(statement, [commentContent, userId, subsectionId, courseId,0,userName])
+            return result
+        }
+
+
+    }
+    // 根据小节id获取评论
+    async getCommentsBySubsesctionId(subsectionId){
+        const statement = `select * from comments where subsection_id = ?`
+        const [result] = await connection.execute(statement, [subsectionId])
+        return result
+    }
+
+    // 根据课程id获取评论
+    async getAllCommentsByCourseId(courseId){
+        const statement = `select * from comments where course_id = ?`
+        const  [result] = await connection.execute(statement, [courseId])
+        return result
+    }
+
+    // 获取学生选择题答案
+    async getStudentChoiceAnswer(questionId, studentId){
+        const statement = `select student_answer from choiceanswers where student_id = ? and question_id = ?`
+        const [result] = await connection.execute(statement,[studentId, questionId])
+        return result[0]
+    }
+    // 获取学生判断题答案
+    async getStudentJudgeAnswer(questionId, studentId){
+        const statement = `select student_answer from judgeanswers where student_id = ? and question_id = ?`
+        const [result] = await connection.execute(statement,[studentId, questionId])
+        return result[0]
+    }
+    // 更新评论状态
+    async updataCommentState(commentId){
+        const statement = 'update comments set state = ? where commment_id = ?'
+        const result = await connection.execute(statement,[1,commentId])
+        return result
+    }
+
+    // 创建课程预警
+    async createWarning(warning){
+        const statement = 'insert into warnings(courseId, studentId,state, courseName) values(?,?,?,?)'
+        const [result] = await connection.execute(statement,[warning.courseId, warning.studentId, 0, warning.courseName])
+        return result
+    }
+
+    // 获取课程预警
+    async getWarning(userId){
+        const statement = 'select * from warnings where studentId = ? and state = ?'
+        const [result] = await connection.execute(statement,[userId,0])
+        return result
+    }
+    // 更新课程预警state
+    async updateWarningState(userId){
+        const statement = 'update warnings set state = ? where studentId = ?'
+        const [result] = await connection.execute(statement,[1,userId])
+        return result
+    }
 
 }
 module.exports = new CourseService()

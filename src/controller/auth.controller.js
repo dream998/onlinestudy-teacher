@@ -5,7 +5,7 @@ class AuthController{
     async login(ctx,next){
         const {user_id, user_name,user_email,user_school,user_college,user_class,introduction,user_avator_url} = ctx.user
         const token = jwt.sign({user_id,user_name},PRIVATE_KEY,{
-            expiresIn: 60*60*24,
+            expiresIn: 60*60*24*10,
             algorithm: 'RS256'
         })
         ctx.body = {
