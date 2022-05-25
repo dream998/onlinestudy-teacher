@@ -30,6 +30,8 @@ const {create,
     createWarning,
     getWarning,
     updateWarningState,
+    saveShare,
+    shareInfo,
     saveAnswers} = require('../controller/course.controller')
 
 const courseRouter = new Router({prefix:'/courses'})
@@ -95,4 +97,8 @@ courseRouter.post('/coursewarning',createWarning)
 courseRouter.get('/coursewarning',verifyAuth, getWarning)
 // 更新课程预警state
 courseRouter.get('/updatewarningstate',verifyAuth,updateWarningState)
+// 发表共享
+courseRouter.post('/share',verifyAuth,saveShare)
+// 获取shares
+courseRouter.get('/:courseId/share',shareInfo)
 module.exports = courseRouter

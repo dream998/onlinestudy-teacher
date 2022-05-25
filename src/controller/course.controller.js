@@ -370,6 +370,19 @@ class CourseController {
         ctx.body = result
     }
 
+    // 保存分享
+    async saveShare(ctx, next){
+        const {user_id:userId,user_name:userName} = ctx.user
+        const {courseId, title,content} = ctx.request.body
+        const result = await courseService.createShare(userId, userName, courseId, title, content)
+        ctx.body = '发表成功！'
+    }
+    // 获取分享
+    async shareInfo(ctx, next){
+        const {courseId} = ctx.params
+        const result = await courseService.getShares(courseId)
+        ctx.body = result
+    }
 }
 
 

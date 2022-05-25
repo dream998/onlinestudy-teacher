@@ -357,6 +357,19 @@ class CourseService {
         const [result] = await connection.execute(statement,[1,userId])
         return result
     }
+    // 保存分享
+    async createShare(userId, userName, courseId, title, content){
+        const statement = 'insert into shares(title,content,authorId,authorName,courseId) values(?,?,?,?,?)'
+        const [result] = await connection.execute(statement, [title,content,userId,userName,courseId])
+        return result
+
+    }
+    // 获取分享
+    async getShares(courseId){
+        const statement = 'select * from shares where courseId = ?'
+        const [result] = await connection.execute(statement, [courseId])
+        return result 
+    }
 
 }
 module.exports = new CourseService()
